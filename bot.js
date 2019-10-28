@@ -1,18 +1,39 @@
 const Discord = require('discord.js');
 const bot = new Discord.Client();
 var auth = require('./auth.json');
+//files
+var fs = require('fs');
+var myFile;
+	
 bot.once('ready', () => {
 	console.log('Marty Running');
 });
 bot.login(auth.token);
-var fs = require('fs');
-//for finding @'s
+function Emotion(str1, str2) { 
+   this.name = str1; 
+   this.emotions = str2; 
+} 
 var person = '';
-// Initialize Discord Bot
 
+//preload emotion.txt for later use into an object named emotions
+myFile = fs.readFileSync('emotions.txt','utf8');
+var names = myFile.toString().split(';');
+var myEmotions = new Array();
+var listName, list;
+for(var i = 0; i < names.length; i++){
+	list = names[i].split('\n');
+	listName = list.shift();
+	myEmotions.push(new Emotion(listName,list));
+}
+//preload reaction-list.txt
+myFile = fs.readFileSync('reaction-list.txt','utf8');
+var reactionlist = myFile.toString().split(',');
+
+//preload jokes.txt
+myFile = fs.readFileSync('jokes.txt','utf8');
+var myjokes = myFile.toString().split(";");
 
 bot.on('message', message => {
-    // Our bot needs to know if it will execute a command
     // It will listen for messages that will start with `m!`
 	
 if (message.content.substring(0, 2) == 'm!') {
@@ -34,12 +55,13 @@ if (message.content.substring(0, 2) == 'm!') {
 		break;
 		case 'vex':
 			message.channel.send('Quack');
+
 		break;
 		case 'alexis':
 			message.channel.send('Burn it all');
 		break;
 		case 'ghost':
-                	message.channel.send('I DON\'T SAY MOOOO!!!!');
+			message.channel.send('I DON\'T SAY MOOOO!!!!');
 		break;
 		case 'sad':
 			message.channel.send('Sad Boi Hours: 8 PM to 7 AM');
@@ -54,8 +76,7 @@ if (message.content.substring(0, 2) == 'm!') {
 			message.channel.send(pet(message.author.id));
 		break;
 		case 'quack':
-			var temp = fs.readFileSync('vexid.txt','utf8');
-			message.channel.send(temp.toString().concat(' Someone is Summoning you'));			
+			message.channel.send(temp.vexid.concact(' Someone is Summoning you'));			
 		break;
 		case 'userid':
 			message.channel.send(message.author.id);
@@ -66,23 +87,24 @@ if (message.content.substring(0, 2) == 'm!') {
 		case 'pie':
 			message.channel.send('Everyone wants Freedom')
 		break;
-		case 'slap':
-		case 'happy':
-			message.channel.send(Emote(cmd));			
-		break;
-         }
+		
+	}
+	if(reactionlist.includes(cmd)){
+		message.channel.send(Emote(cmd));
+	}
      }
 });
 function joke(){
-	var jokes = fs.readFileSync('jokes.txt','utf8');
-	var myjokes = jokes.toString().split(";");
 	return myjokes[Math.floor(Math.random() * (myjokes.length - 1))];
 	
 }
 function Emote(em){
-	var emote = fs.readFileSync(em.concat('.txt'),'utf8');
-	var myEmotes = emote.toString().split(';');
-	return myEmotes[Math.floor(Math.random() * (myEmotes.length - 1))];
+	for (var i = 0; i < myEmotions.length; i++){
+		if(myEmotions[i].name == em){
+			return myEmotions[i].emotions[Math.floor(Math.random() * (myEmotions[i].emotions.length - 1))];
+		}
+	}
+	return 'No reactions for that yet';
 }
 function pet(user){
 	var uwu = 'uwu';
