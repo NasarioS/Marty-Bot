@@ -13,7 +13,7 @@ function Emotion(str1, str2) {
    this.name = str1; 
    this.emotions = str2; 
 } 
-var person = '';
+var vex = fs.readFileSync('vexid.txt','utf8'); 
 
 //preload emotion.txt for later use into an object named emotions
 myFile = fs.readFileSync('emotions.txt','utf8');
@@ -76,7 +76,7 @@ if (message.content.substring(0, 2) == 'm!') {
 			message.channel.send(pet(message.author.id));
 		break;
 		case 'quack':
-			message.channel.send(temp.vexid.concact(' Someone is Summoning you'));			
+			message.channel.send(vex.toString().concat(' Someone is Summoning you'));			
 		break;
 		case 'userid':
 			message.channel.send(message.author.id);
@@ -99,12 +99,16 @@ function joke(){
 	
 }
 function Emote(em){
+	var bool = true;
 	for (var i = 0; i < myEmotions.length; i++){
-		if(myEmotions[i].name == em){
+		if(myEmotions[i].name = em){
+			bool = false;
 			return myEmotions[i].emotions[Math.floor(Math.random() * (myEmotions[i].emotions.length - 1))];
 		}
 	}
+	if(bool){
 	return 'No reactions for that yet';
+	}
 }
 function pet(user){
 	var uwu = 'uwu';
@@ -117,6 +121,8 @@ function goodnight(user){
 function help(){
 var str = 'Activate Me: \"m!\"\nCommands: Alexis, Joker, Vex,\nGhost,';
 var str1 = 'Wyvern, Sad, Joke, Pet, Gone, Goodnight, Pie\n';
-var str2 = 'reactions: Happy, Slap, ';
-return str.concat(str1,str2);
+var str2 = 'reactions: Happy, Slap, Smirk, Teehee, Pout, Cry, Punch, Cheer, Dance\n';
+var str3 = 'Thinking, Laugh, Wheeze, Eyeroll, What, Why, Pissed, Flirt, Fingerguns\n';
+var str4 =  'Applaud, Slowclap, Nervous, Hide, Wink, Wiggle, Beg, Later';
+return str.concat(str1,str2, str3, str4);
 }
