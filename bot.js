@@ -101,7 +101,8 @@ function joke(){
 function Emote(em){
 	var bool = true;
 	for (var i = 0; i < myEmotions.length; i++){
-		if(myEmotions[i].name = em){
+		console.log(myEmotions[i].name.toString(), em);
+		if(em == myEmotions[i].name.toString()){
 			bool = false;
 			return myEmotions[i].emotions[Math.floor(Math.random() * (myEmotions[i].emotions.length - 1))];
 		}
