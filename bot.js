@@ -4,7 +4,9 @@ var auth = require('./auth.json');
 //files
 var fs = require('fs');
 var myFile;
-	
+//emotes embed
+var emotesEmbed = new Discord.RichEmbed();
+emotesEmbed.setColor('GOLD');
 bot.once('ready', () => {
 	console.log('Marty Running');
 });
@@ -63,8 +65,8 @@ if (message.content.substring(0, 2) == 'm!') {
 		case 'ghost':
 			message.channel.send('I DON\'T SAY MOOOO!!!!');
 		break;
-		case 'sad':
-			message.channel.send('Sad Boi Hours: 8 PM to 7 AM');
+		case 'sadboi':
+			message.channel.send('Sad Boi Hours: **8 PM to 7 AM**');
 		break;
 		case 'joke':
 			message.channel.send(joke());
@@ -99,17 +101,12 @@ function joke(){
 	
 }
 function Emote(em){
-	var bool = true;
 	for (var i = 0; i < myEmotions.length; i++){
-		console.log(myEmotions[i].name.toString(), em);
 		if(em == myEmotions[i].name.toString()){
-			bool = false;
-			return myEmotions[i].emotions[Math.floor(Math.random() * (myEmotions[i].emotions.length - 1))];
+			return emotesEmbed.setImage(myEmotions[i].emotions[Math.floor(Math.random() * (myEmotions[i].emotions.length - 1))]);
 		}
 	}
-	if(bool){
-	return 'No reactions for that yet';
-	}
+	return emotesEmbed.setTitle('No reactions for that yet');
 }
 function pet(user){
 	var uwu = 'uwu';
@@ -120,10 +117,11 @@ function goodnight(user){
 	return temp.concat('<@',user,'> Rest well buddy!');
 }
 function help(){
-var str = 'Activate Me: \"m!\"\nCommands: Alexis, Joker, Vex,\nGhost,';
-var str1 = 'Wyvern, Sad, Joke, Pet, Gone, Goodnight, Pie\n';
-var str2 = 'reactions: Happy, Slap, Smirk, Teehee, Pout, Cry, Punch, Cheer, Dance\n';
+var str = 'Activate Me: \"m!\"\nCommands: **Alexis, Joker, Vex,\nGhost,';
+var str1 = 'Wyvern, SadBoi, Joke, Pet, Gone, Goodnight, Pie**\n\n';
+var str2 = 'Reactions: **Happy, Slap, Smirk, Teehee, Pout, Cry, Punch, Cheer, Dance\n';
 var str3 = 'Thinking, Laugh, Wheeze, Eyeroll, What, Why, Pissed, Flirt, Fingerguns\n';
-var str4 =  'Applaud, Slowclap, Nervous, Hide, Wink, Wiggle, Beg, Later';
-return str.concat(str1,str2, str3, str4);
+var str4 =  'Applaud, Slowclap, Nervous, Hide, Wink, Wiggle, Beg, Later\n';
+var str5 = 'Facepalm, Shock, Fear, Rock, Kazookid, Stare, Dab, Gotem, Sips, Sad, Awkward, \nTableflip, Objection**';
+return str.concat(str1,str2, str3, str4,str5);
 }
